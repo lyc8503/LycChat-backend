@@ -16,7 +16,7 @@ public class SessionController {
     @Autowired
     UserService userService;
 
-    @PostMapping(value = "/session", consumes = "application/json")
+    @PostMapping(value = "/session")
     @Operation(summary = "登录")
     public CommonResponse<PostSessionResponse> postSession(@RequestBody PostSessionRequest request) {
 

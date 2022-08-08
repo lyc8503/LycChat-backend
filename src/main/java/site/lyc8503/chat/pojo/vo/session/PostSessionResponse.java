@@ -1,4 +1,4 @@
-package site.lyc8503.chat.domain.vo.session;
+package site.lyc8503.chat.pojo.vo.session;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -12,7 +12,7 @@ public class PostSessionResponse {
     @Schema(description = "token")
     public String token;
     @Schema(description = "token有效期")
-    public int expires;
+    public long expires;
 
 
 }

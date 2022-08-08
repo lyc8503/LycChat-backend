@@ -33,7 +33,6 @@ dependencies {
 
     // authorization
     implementation 'cn.dev33:sa-token-spring-boot-starter:1.30.0'
-
 }
 
 tasks.named('test') {

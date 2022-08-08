@@ -10,7 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import site.lyc8503.chat.domain.vo.CommonResponse;
+import site.lyc8503.chat.pojo.vo.CommonResponse;
 import site.lyc8503.chat.exception.BaseException;
 
 import java.util.stream.Collectors;

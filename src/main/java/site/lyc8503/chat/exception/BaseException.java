@@ -2,7 +2,7 @@ package site.lyc8503.chat.exception;
 
 import lombok.Getter;
 
-public class BaseException extends Exception {
+public abstract class BaseException extends Exception {
     @Getter
     private final int code;
     @Getter

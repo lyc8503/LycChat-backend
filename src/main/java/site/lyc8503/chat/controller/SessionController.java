@@ -1,13 +1,16 @@
 package site.lyc8503.chat.controller;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.stp.StpUtil;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import site.lyc8503.chat.domain.vo.CommonResponse;
-import site.lyc8503.chat.domain.vo.session.PostSessionRequest;
-import site.lyc8503.chat.domain.vo.session.PostSessionResponse;
+import site.lyc8503.chat.exception.InvalidCredentialException;
+import site.lyc8503.chat.pojo.vo.CommonResponse;
+import site.lyc8503.chat.pojo.vo.session.PostSessionRequest;
+import site.lyc8503.chat.pojo.vo.session.PostSessionResponse;
 import site.lyc8503.chat.service.UserService;
 
 import javax.validation.Valid;
@@ -25,24 +28,38 @@ public class SessionController {
 
     @PostMapping(value = "/session")
     @Operation(summary = "登录")
-    public CommonResponse<PostSessionResponse> postSession(@Valid @RequestBody PostSessionRequest request) {
+    public CommonResponse<PostSessionResponse> postSession(@Valid @RequestBody PostSessionRequest request) throws InvalidCredentialException {
 
-        PostSessionResponse response = PostSessionResponse.builder()
-                .token("123")
-                .expires(123)
-                .build();
+        if (userService.login(request.getUsername(), request.getPassword())) {
+            StpUtil.login(request.getUsername());
 
-        return CommonResponse.success(response);
+            PostSessionResponse response = PostSessionResponse.builder()
+                    .token(StpUtil.getTokenValue())
+                    .expires(StpUtil.getTokenTimeout())
+                    .build();
+
+            return CommonResponse.success(response);
+        } else {
+            throw new InvalidCredentialException("用户名或密码错误");
+        }
+
     }
 
     @DeleteMapping("/session")
+    @Operation(summary = "登出")
     public CommonResponse<Object> deleteSession() {
+        StpUtil.checkLogin();
+        StpUtil.logout();
+
         return CommonResponse.success(null);
     }
 
     @GetMapping("/session")
     @Operation(summary = "获取会话状态")
     public CommonResponse<Object> getSession() {
+
+        StpUtil.getLoginId();
+
         return CommonResponse.success(null);
     }
 

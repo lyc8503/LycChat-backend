@@ -1,4 +1,4 @@
-package site.lyc8503.chat.domain.vo.session;
+package site.lyc8503.chat.pojo.vo.session;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -20,8 +20,6 @@ public class PostSessionRequest {
     @Schema(description = "密码")
     @NotEmpty(message = "密码不能为空")
     @Size(min = 8, max = 32, message = "密码长度必须在 8-32 之间")
-//    @Pattern(regexp = ".*[a-z]*.*", message = "密码必须包含小写字母")
-//    @Pattern(regexp = ".*[A-Z]*.*", message = "密码必须包含大写字母")
-//    @Pattern(regexp = ".*\\d*.*", message = "密码必须包含数字")
+    // todo: password complexity
     private String password;
 }

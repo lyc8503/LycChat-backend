@@ -11,6 +11,7 @@ public class TokenConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaRouteInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/session");
+                .excludePathPatterns("/session")
+                .excludePathPatterns("/v3/api-docs");
     }
 }

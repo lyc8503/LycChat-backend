@@ -1,4 +1,4 @@
-package site.lyc8503.chat.domain.vo;
+package site.lyc8503.chat.pojo.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.v3.oas.annotations.media.Schema;

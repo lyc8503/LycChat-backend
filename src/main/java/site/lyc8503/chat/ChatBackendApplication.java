@@ -6,6 +6,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @EnableOpenApi
 @SpringBootApplication
+
 public class ChatBackendApplication {
 
     public static void main(String[] args) {

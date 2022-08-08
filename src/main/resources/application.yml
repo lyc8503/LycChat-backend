@@ -1,6 +1,29 @@
 spring:
-
   # a bug fix for springfox, detail: https://stackoverflow.com/questions/70036953/springboot-2-6-0-spring-fox-3-failed-to-start-bean-documentationpluginsboot
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  jackson:
+    # snake case style
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_null
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.1.10:3306/chat
+    username: chat
+    password: z&FURWgkH5*x9&
+
+
+sa-token:
+  token-name: token
+  # 30 days
+  timeout: 2592000
+  # no expiration
+  activity-timeout: -1
+  # multi login
+  is-concurrent: true
+  is-share: true
+  token-style: uuid
+  is-log: true

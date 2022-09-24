@@ -2,8 +2,9 @@ package site.lyc8503.chat.service.impl;
 
 import cn.dev33.satoken.secure.BCrypt;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
+import site.lyc8503.chat.exception.BizException;
+import site.lyc8503.chat.exception.ErrorType;
 import site.lyc8503.chat.mapper.UserMapper;
 import site.lyc8503.chat.pojo.entity.UserEntity;
 import site.lyc8503.chat.service.UserService;
@@ -15,21 +16,23 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public boolean login(String username, String password) {
+    public void login(String username, String password) {
         UserEntity userEntity = userMapper.getUserByUsername(username);
         if (userEntity == null) {
-            return false;
+            throw new BizException(ErrorType.INVALID_CREDENTIAL);
         }
 
-        return BCrypt.checkpw(password, userEntity.passwordHash);
+        if (!BCrypt.checkpw(password, userEntity.passwordHash)) {
+            throw new BizException(ErrorType.INVALID_CREDENTIAL);
+        }
     }
 
     @Override
-    public boolean register(String username, String password, String nickname, String email) {
+    public void register(String username, String password, String nickname, String email) {
 
         // user exists
         if (userMapper.getUserByUsername(username) != null) {
-            return false;
+            throw new BizException(ErrorType.USERNAME_EXISTS);
         }
 
         UserEntity userEntity = UserEntity.builder()
@@ -40,6 +43,5 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         userMapper.insertUser(userEntity);
-        return true;
     }
 }

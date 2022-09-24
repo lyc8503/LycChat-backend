@@ -1,10 +1,14 @@
 package site.lyc8503.chat.pojo.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import site.lyc8503.chat.exception.BizException;
+import site.lyc8503.chat.exception.ErrorType;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,15 +21,34 @@ public class CommonResponse<T> {
     @Schema(description = "响应数据")
     private T data;
 
+    @Hidden
+    @JsonIgnore
+    // used to define http status code
+    private int httpCode;
+
+    public static <T> CommonResponse<T> success() {
+        return success(null);
+    }
+
     public static <T> CommonResponse<T> success(T data) {
-        return new CommonResponse<>(0, "success", data);
+        return success(data, 200);
     }
 
-    public static <T> CommonResponse<T> error(int code, String msg, T data) {
-        return new CommonResponse<>(code, msg, data);
+    public static <T> CommonResponse<T> success(T data, int httpCode) {
+        return new CommonResponse<>(0, "success", data, httpCode);
     }
 
-    public static CommonResponse<?> error(int code, String msg) {
-        return new CommonResponse<>(code, msg, null);
+    public static <T> CommonResponse<T> error(ErrorType type) {
+        return new CommonResponse<>(type.getCode(), type.getMessage(), null, type.getHttpCode());
     }
+
+    public static <T> CommonResponse<T> error(ErrorType type, String msg) {
+        return new CommonResponse<>(type.getCode(), msg, null, type.getHttpCode());
+    }
+
+    public static <T> CommonResponse<T> error(BizException exception) {
+        return new CommonResponse<>(exception.getCode(), exception.getMessage(), null, exception.getHttpCode());
+    }
+
+
 }

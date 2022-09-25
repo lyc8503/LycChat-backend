@@ -17,11 +17,11 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE id = #{id}")
     public UserEntity getUser(int id);
 
-    @Insert("INSERT INTO user (username, password_hash) VALUES (#{username}, #{passwordHash})")
-    public void insertUser(UserEntity user);
+    @Insert("INSERT INTO user (nickname, username, email, password_hash) VALUES (#{nickname}, #{username}, #{email}, #{passwordHash})")
+    public void insertUser(UserEntity userEntity);
 
-    @Update("UPDATE user SET username = #{username}, password_hash = #{passwordHash} WHERE id = #{id}")
-    public void updateUser(UserEntity user);
+    @Update("UPDATE user SET nickname = #{nickname}, username = #{username}, email = #{email}, password_hash = #{passwordHash} WHERE id = #{id}")
+    public void updateUser(UserEntity userEntity);
 
     @Delete("DELETE FROM user WHERE id = #{id}")
     public void deleteUser(int id);

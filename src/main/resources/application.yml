@@ -5,7 +5,7 @@ spring:
       matching-strategy: ant_path_matcher
 
   jackson:
-    # snake case style
+    # snake case style for response json
     property-naming-strategy: SNAKE_CASE
     default-property-inclusion: non_null
 
@@ -14,6 +14,12 @@ spring:
     url: jdbc:mysql://192.168.1.10:3306/chat
     username: chat
     password: z&FURWgkH5*x9&
+
+  jpa:
+    show-sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: update
 
 sa-token:
   token-name: token
@@ -26,7 +32,3 @@ sa-token:
   is-share: true
   token-style: uuid
   is-log: true
-
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true

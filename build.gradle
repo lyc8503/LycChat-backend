@@ -27,12 +27,12 @@ dependencies {
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
     // db
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
-    implementation 'mysql:mysql-connector-java:8.0.29'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java:8.0.30'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // authorization
-    implementation 'cn.dev33:sa-token-spring-boot-starter:1.30.0'
+    implementation 'cn.dev33:sa-token-spring-boot-starter:1.31.0'
 }
 
 tasks.named('test') {

@@ -64,7 +64,7 @@ public class SessionController {
         } catch (NotLoginException e) {
             return CommonResponse.success(GetSessionResponse.builder()
                     .isLogin(false)
-                    .username("")
+                    .username(null)
                     .build());
         }
     }

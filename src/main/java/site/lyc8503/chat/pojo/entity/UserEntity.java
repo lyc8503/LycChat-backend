@@ -1,16 +1,19 @@
 package site.lyc8503.chat.pojo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "user")
 @Builder
@@ -22,9 +25,13 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
+    @NotNull
     public String nickname;
+    @NotNull
     public String username;
+    @NotNull
     public String email;
+    @NotNull
     public String passwordHash;
 
     @CreationTimestamp
@@ -33,6 +40,18 @@ public class UserEntity {
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateAt;
+    private Date updatedAt;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

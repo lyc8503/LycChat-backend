@@ -9,9 +9,9 @@ import lombok.Data;
 @Schema(description = "登录请求响应")
 public class PostSessionResponse {
 
-    @Schema(description = "token")
+    @Schema(description = "token", required = true)
     private String token;
-    @Schema(description = "token有效期")
+    @Schema(description = "token有效期", required = true)
     private long expires;
 
 

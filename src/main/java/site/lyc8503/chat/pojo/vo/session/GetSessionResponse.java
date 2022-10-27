@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 @Schema(description = "查询登录状态响应")
 public class GetSessionResponse {
-    @Schema(description = "登录是否有效")
+    @Schema(description = "登录是否有效", required = true)
     private boolean isLogin;
     @Schema(description = "当前用户id")
     private String username;

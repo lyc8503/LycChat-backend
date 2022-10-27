@@ -14,9 +14,9 @@ import site.lyc8503.chat.exception.ErrorType;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ApiModel(value = "通用响应")
 public class CommonResponse<T> {
-    @Schema(description = "响应码")
+    @Schema(description = "响应码", required = true)
     private int code;
-    @Schema(description = "响应消息")
+    @Schema(description = "响应消息", required = true)
     private String msg;
     @Schema(description = "响应数据")
     private T data;

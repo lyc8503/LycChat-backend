@@ -3,6 +3,7 @@ package site.lyc8503.chat.controller;
 import cn.dev33.satoken.exception.NotLoginException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,9 +24,9 @@ public class GlobalExceptionHandler {
         return CommonResponse.error(e);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public CommonResponse<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        log.error("Http Message Not Readable Exception", e);
+    @ExceptionHandler({HttpMessageNotReadableException.class, HttpMediaTypeException.class})
+    public CommonResponse<?> handleBadRequest(Exception e) {
+        log.error("Bad Request Exception", e);
         return CommonResponse.error(ErrorType.BAD_REQUEST);
     }
 

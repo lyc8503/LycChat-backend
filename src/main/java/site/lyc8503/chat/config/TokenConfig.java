@@ -16,6 +16,7 @@ public class TokenConfig implements WebMvcConfigurer {
                     // Not match session & register requests
                     SaRouter.match("/session").stop();
                     SaRouter.match(SaHttpMethod.POST).match("/users").stop();
+                    SaRouter.match(SaHttpMethod.OPTIONS).match("/users").stop();
 
                     SaRouter.match("/**")
                             .notMatch("/swagger-ui/**")

@@ -34,6 +34,10 @@ dependencies {
 
     // authorization
     implementation 'cn.dev33:sa-token-spring-boot-starter:1.31.0'
+
+    // Test MockMvc
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.5'
+    testImplementation 'com.h2database:h2:2.1.214'
 }
 
 tasks.named('test') {

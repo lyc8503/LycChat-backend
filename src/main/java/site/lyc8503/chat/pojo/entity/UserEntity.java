@@ -14,7 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
-@Table(name = "user")
+@Table(name = "user1")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

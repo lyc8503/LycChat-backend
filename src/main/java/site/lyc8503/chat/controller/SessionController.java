@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import site.lyc8503.chat.pojo.mapper.UserMapper;
 import site.lyc8503.chat.pojo.vo.CommonResponse;
 import site.lyc8503.chat.pojo.vo.session.GetSessionResponse;
 import site.lyc8503.chat.pojo.vo.session.PostSessionRequest;
@@ -32,7 +33,7 @@ public class SessionController {
     public CommonResponse<PostSessionResponse> postSession(@Valid @RequestBody PostSessionRequest request) {
 
         // throws Exception if failed
-        userService.login(request.getUsername(), request.getPassword());
+        userService.login(UserMapper.INSTANCE.postSessionRequestToUserDTO(request));
 
         StpUtil.login(request.getUsername());
 

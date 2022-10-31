@@ -30,7 +30,7 @@ public class UserController {
 
         userService.register(request.getUsername(), request.getPassword(), request.getNickname(), request.getEmail());
 
-        return CommonResponse.success();
+        return CommonResponse.success(201);
     }
 
 }

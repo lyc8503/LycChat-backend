@@ -29,4 +29,20 @@ public class Util {
             }
         };
     }
+
+    public static ResultMatcher success() {
+        return success(200);
+    }
+
+    public static ResultMatcher success(int httpCode) {
+        return result -> {
+            int status = result.getResponse().getStatus();
+            assertEquals(httpCode, status);
+
+            String res = result.getResponse().getContentAsString();
+            JSONObject json = new JSONObject(res);
+            int code = json.getInt("code");
+            assertEquals(0, code);
+        };
+    }
 }

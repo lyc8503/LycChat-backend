@@ -14,7 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
-@Table(name = "user1")
+@Table(name = "user1")  // table name "user" is a reserved word in H2
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

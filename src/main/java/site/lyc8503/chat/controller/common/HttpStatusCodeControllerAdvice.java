@@ -1,4 +1,4 @@
-package site.lyc8503.chat.controller;
+package site.lyc8503.chat.controller.common;
 
 
 import org.springframework.core.MethodParameter;

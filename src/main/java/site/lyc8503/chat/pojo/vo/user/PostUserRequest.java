@@ -15,7 +15,7 @@ public class PostUserRequest {
     @Schema(description = "用户名", required = true)
     @NotNull
     @Size(min = 4, max = 16, message = "用户名长度必须在 4-16 之间")
-    @Pattern(regexp = "^[a-zA-Z\\d-_]*$", message = "用户名只能包含字母,数字,下划线和连字符")
+    @Pattern(regexp = "^[a-z\\d-_]*$", message = "用户名只能包含小写字母,数字,下划线和连字符")
     private String username;
 
     @Schema(description = "密码", required = true)

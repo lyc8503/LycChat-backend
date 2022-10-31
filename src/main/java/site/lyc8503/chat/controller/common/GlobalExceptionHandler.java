@@ -1,4 +1,4 @@
-package site.lyc8503.chat.controller;
+package site.lyc8503.chat.controller.common;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import lombok.extern.slf4j.Slf4j;

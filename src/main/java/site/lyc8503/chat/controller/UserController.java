@@ -5,15 +5,14 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import site.lyc8503.chat.pojo.mapper.UserMapper;
 import site.lyc8503.chat.pojo.vo.CommonResponse;
 import site.lyc8503.chat.pojo.vo.user.PostUserRequest;
 import site.lyc8503.chat.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 @Slf4j
 @RestController
@@ -27,10 +26,15 @@ public class UserController {
     @PostMapping("/users")
     @Operation(summary = "创建用户(注册)")
     public CommonResponse<?> postUser(@Valid @RequestBody PostUserRequest request) {
-
-        userService.register(request.getUsername(), request.getPassword(), request.getNickname(), request.getEmail());
-
+        userService.register(UserMapper.INSTANCE.postUserRequestToUserDTO(request));
         return CommonResponse.success(201);
     }
+
+    @GetMapping("/users/search/{query}")
+    @Operation(summary = "搜索用户")
+    public CommonResponse<?> searchUser(@PathVariable @NotBlank String query) {
+        return CommonResponse.success();
+    }
+
 
 }

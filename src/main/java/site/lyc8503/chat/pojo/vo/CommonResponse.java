@@ -34,6 +34,10 @@ public class CommonResponse<T> {
         return success(data, 200);
     }
 
+    public static <T> CommonResponse<T> success(int httpCode) {
+        return success(null, httpCode);
+    }
+
     public static <T> CommonResponse<T> success(T data, int httpCode) {
         return new CommonResponse<>(0, "success", data, httpCode);
     }

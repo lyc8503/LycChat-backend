@@ -8,6 +8,7 @@ import site.lyc8503.chat.pojo.dto.UserDTO;
 import site.lyc8503.chat.pojo.entity.UserEntity;
 import site.lyc8503.chat.pojo.vo.session.PostSessionRequest;
 import site.lyc8503.chat.pojo.vo.user.PostUserRequest;
+import site.lyc8503.chat.pojo.vo.user.UserVO;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
@@ -16,6 +17,11 @@ public interface UserMapper {
 
     @Mapping(target = "passwordHash", expression = "java(cn.dev33.satoken.secure.BCrypt.hashpw(userDTO.getPassword()))")
     UserEntity userDTOToUserEntity(UserDTO userDTO);
+
+    @Mapping(target = "password", ignore = true)
+    UserDTO userEntityToUserDTO(UserEntity userEntity);
+
+    UserVO userDTOtoUserVO(UserDTO userDTO);
 
     UserDTO postUserRequestToUserDTO(PostUserRequest request);
     UserDTO postSessionRequestToUserDTO(PostSessionRequest request);

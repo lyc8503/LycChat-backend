@@ -5,14 +5,17 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import site.lyc8503.chat.pojo.dto.UserDTO;
 import site.lyc8503.chat.pojo.mapper.UserMapper;
 import site.lyc8503.chat.pojo.vo.CommonResponse;
 import site.lyc8503.chat.pojo.vo.user.PostUserRequest;
+import site.lyc8503.chat.pojo.vo.user.UserVO;
 import site.lyc8503.chat.service.UserService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -30,11 +33,12 @@ public class UserController {
         return CommonResponse.success(201);
     }
 
-    @GetMapping("/users/search/{query}")
+    @GetMapping("/users/search/{query:[a-z\\d-_]+}")
     @Operation(summary = "搜索用户")
-    public CommonResponse<?> searchUser(@PathVariable @NotBlank String query) {
-        return CommonResponse.success();
+    public CommonResponse<List<UserVO>> searchUser(@PathVariable String query) {
+
+        Page<UserDTO> dtos = userService.searchUser(query, 0, 10);  // fixed size, just first 10 results
+
+        return CommonResponse.success(dtos.stream().map(UserMapper.INSTANCE::userDTOtoUserVO).toList());
     }
-
-
 }

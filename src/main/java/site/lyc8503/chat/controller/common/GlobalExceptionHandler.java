@@ -4,6 +4,7 @@ import cn.dev33.satoken.exception.NotLoginException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,6 +42,12 @@ public class GlobalExceptionHandler {
     public CommonResponse<?> handleAuthorizeException(NotLoginException e) {
         log.error("Not Login Exception", e);
         return CommonResponse.error(ErrorType.NOT_LOGIN, e.getMessage());
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public CommonResponse<?> handleMethodNotSupportException(HttpRequestMethodNotSupportedException e) {
+        log.error("Method Not Support Exception", e);
+        return CommonResponse.error(ErrorType.BAD_REQUEST, e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

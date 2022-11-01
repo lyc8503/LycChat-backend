@@ -70,4 +70,14 @@ class CommonTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }
+
+    @Test
+    void testMethodNotAllowed() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/");
+
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(bizError(ErrorType.BAD_REQUEST))
+                .andExpect(content().json("{\"msg\": \"Request method 'POST' not supported\"}"));
+    }
 }

@@ -2,6 +2,8 @@ package site.lyc8503.chat.service.impl;
 
 import cn.dev33.satoken.secure.BCrypt;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import site.lyc8503.chat.dao.UserDao;
 import site.lyc8503.chat.exception.BizException;
@@ -39,5 +41,12 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = UserMapper.INSTANCE.userDTOToUserEntity(userDTO);
         userDao.save(userEntity);
+    }
+
+    @Override
+    public Page<UserDTO> searchUser(String query, int page, int size) {
+        Page<UserEntity> userEntities = userDao.findAllByUsernameContaining(query, PageRequest.of(page, size));
+
+        return userEntities.map(UserMapper.INSTANCE::userEntityToUserDTO);
     }
 }

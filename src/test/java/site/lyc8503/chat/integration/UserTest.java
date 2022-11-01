@@ -19,6 +19,7 @@ import site.lyc8503.chat.pojo.entity.UserEntity;
 import static cn.dev33.satoken.secure.BCrypt.checkpw;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static site.lyc8503.chat.integration.Util.bizError;
 import static site.lyc8503.chat.integration.Util.success;
 
@@ -86,5 +87,64 @@ class UserTest {
         mockMvc.perform(request)
                 .andDo(print())
                 .andExpect(bizError(ErrorType.USERNAME_EXISTS));
+    }
+
+    @Test
+    void testSearchUser() throws Exception {
+        // user0 - user10 (included)
+        for (int i = 0; i <= 10; i++) {
+            dao.save(UserEntity.builder()
+                    .username("user" + i)
+                    .passwordHash("PASSword" + i)
+                    .email(i + "@example.com")
+                    .nickname("nickname" + i)
+                    .build());
+        }
+
+        // query = user1, result = [user1, user10]
+        RequestBuilder request = MockMvcRequestBuilders.get("/users/search/user1");
+
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(success())
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data.length()").value(2))
+                .andExpect(content().json("""
+                    {"data": [{"username": "user1"},{"username": "user10"}]}
+                """));
+
+        // query = user2, result = [user2]
+        RequestBuilder request2 = MockMvcRequestBuilders.get("/users/search/user2");
+        mockMvc.perform(request2)
+                .andDo(print())
+                .andExpect(success())
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data.length()").value(1))
+                .andExpect(content().json("""
+                    {"data": [{"username": "user2"}]}
+                """));
+
+        // query = user123, result = []
+        RequestBuilder request3 = MockMvcRequestBuilders.get("/users/search/user123");
+        mockMvc.perform(request3)
+                .andDo(print())
+                .andExpect(success())
+                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data.length()").value(0));
+    }
+
+    @Test
+    void testSearchUserEmpty() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.get("/users/search/");
+
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+        RequestBuilder request2 = MockMvcRequestBuilders.get("/users/search/" + " ");
+
+        mockMvc.perform(request2)
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 }

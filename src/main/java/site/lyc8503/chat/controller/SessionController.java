@@ -21,7 +21,6 @@ import javax.validation.Valid;
 @RestController
 @Api(tags = "会话管理")
 @RequiredArgsConstructor
-@CrossOrigin
 public class SessionController {
 
     // As of Spring 4.3, if a class defines only one single constructor (using lombok in this case),

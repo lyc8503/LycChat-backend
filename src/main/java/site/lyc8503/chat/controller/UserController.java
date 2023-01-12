@@ -21,7 +21,6 @@ import java.util.List;
 @RestController
 @Api(tags = "用户")
 @RequiredArgsConstructor
-@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -33,12 +32,11 @@ public class UserController {
         return CommonResponse.success(201);
     }
 
-    @GetMapping("/users/search/{query:[a-z\\d-_]+}")
+    @GetMapping("/users/search/{query:[a-z\\d-_]*}")
     @Operation(summary = "搜索用户")
     public CommonResponse<List<UserVO>> searchUser(@PathVariable String query) {
 
         Page<UserDTO> dtos = userService.searchUser(query, 0, 10);  // fixed size, just first 10 results
-
         return CommonResponse.success(dtos.stream().map(UserMapper.INSTANCE::userDTOtoUserVO).toList());
     }
 }

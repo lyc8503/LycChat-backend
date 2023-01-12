@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "好友")
 @RequiredArgsConstructor
-@CrossOrigin
 public class FriendController {
 
 }

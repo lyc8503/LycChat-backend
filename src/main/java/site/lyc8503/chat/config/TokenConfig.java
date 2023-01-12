@@ -13,10 +13,12 @@ public class TokenConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
+                    // Allow CORS preflight TODO: set Origin?
+                    SaRouter.match(SaHttpMethod.OPTIONS).stop();
+
                     // Not match session & register requests
                     SaRouter.match("/session").stop();
                     SaRouter.match(SaHttpMethod.POST).match("/users").stop();
-                    SaRouter.match(SaHttpMethod.OPTIONS).match("/users").stop();
 
                     SaRouter.match("/**")
                             .notMatch("/swagger-ui/**")
